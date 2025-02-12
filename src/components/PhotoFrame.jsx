@@ -15,7 +15,7 @@ const FrameContainer = styled.div`
 
 const ImageWrapper = styled.div`
   position: relative;
-  width: 300%;
+  width: 100%;
   max-width: 300px;
   height: 300px;
   display: flex;
@@ -23,8 +23,9 @@ const ImageWrapper = styled.div`
   align-items: center;
   overflow: hidden;
   cursor: grab;
-  border-radius: 20px;
-  background: linear-gradient(135deg, #f3f3f3, #e0e0e0);
+  border-radius: 50%; /* Círculo */
+  background-color: #007bff; /* Azul para el fondo */
+  border: 5px solid #ff0000; /* Borde rojo */
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 `;
 
