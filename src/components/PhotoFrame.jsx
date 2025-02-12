@@ -8,7 +8,8 @@ const FrameContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 15px;
+  padding: 20px;
 `;
 
 const ImageWrapper = styled.div`
@@ -18,17 +19,25 @@ const ImageWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
+  cursor: grab;
+  border-radius: 20px;
+  background: #f3f3f3;
+`;
+
+const StyledCanvas = styled.canvas`
+  display: none;
 `;
 
 const DownloadButton = styled.button`
-  margin-top: 10px;
-  padding: 10px;
+  padding: 10px 15px;
   background-color: #ff5733;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
+  transition: 0.3s;
   &:hover {
     background-color: #e64a2e;
   }
@@ -37,10 +46,12 @@ const DownloadButton = styled.button`
 const PhotoFrame = () => {
   const [photo, setPhoto] = useState(null);
   const [selectedFrame, setSelectedFrame] = useState(null);
-  const [photoSize, setPhotoSize] = useState(100);
-  const [photoPosition, setPhotoPosition] = useState({ x: 0, y: 0 });
   const [selectedFilter, setSelectedFilter] = useState("none");
+  const [dragging, setDragging] = useState(false);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [photoSize, setPhotoSize] = useState(100);
   const canvasRef = useRef(null);
+  const imageRef = useRef(null);
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
@@ -49,12 +60,23 @@ const PhotoFrame = () => {
     }
   };
 
+  const handleMouseDown = (e) => {
+    setDragging(true);
+  };
+
+  const handleMouseMove = (e) => {
+    if (!dragging || !imageRef.current) return;
+    setPosition({ x: e.nativeEvent.offsetX - 50, y: e.nativeEvent.offsetY - 50 });
+  };
+
+  const handleMouseUp = () => {
+    setDragging(false);
+  };
+
   const handleDownload = () => {
     if (!photo || !selectedFrame) return;
-
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
-
     const img = new Image();
     img.src = photo;
     img.onload = () => {
@@ -63,18 +85,10 @@ const PhotoFrame = () => {
       frameImg.onload = () => {
         canvas.width = 300;
         canvas.height = 300;
-
-        // Aplicar filtro
         ctx.filter = selectedFilter;
-
-        // Dibujar imagen en la posición seleccionada y con el tamaño ajustado
-        ctx.drawImage(img, photoPosition.x, photoPosition.y, (photoSize / 100) * 300, (photoSize / 100) * 300);
-
-        // Dibujar marco
-        ctx.filter = "none"; // No aplicar filtro al marco
+        ctx.drawImage(img, position.x, position.y, (photoSize / 100) * 300, (photoSize / 100) * 300);
+        ctx.filter = "none";
         ctx.drawImage(frameImg, 0, 0, 300, 300);
-
-        // Descargar imagen
         const link = document.createElement("a");
         link.download = "foto_con_marco.png";
         link.href = canvas.toDataURL("image/png");
@@ -87,19 +101,19 @@ const PhotoFrame = () => {
     <FrameContainer>
       <h2>Sube tu Foto</h2>
       <input type="file" accept="image/*" onChange={handleImageUpload} />
-
       {photo && (
         <>
-          <ImageWrapper>
-            <canvas ref={canvasRef} style={{ display: "none" }}></canvas>
+          <ImageWrapper onMouseDown={handleMouseDown} onMouseMove={handleMouseMove} onMouseUp={handleMouseUp}>
+            <StyledCanvas ref={canvasRef} />
             <img
+              ref={imageRef}
               src={photo}
               alt="Foto"
               style={{
                 width: `${photoSize}%`,
                 position: "absolute",
-                top: `${photoPosition.y}px`,
-                left: `${photoPosition.x}px`,
+                top: `${position.y}px`,
+                left: `${position.x}px`,
                 filter: selectedFilter,
                 borderRadius: "50%",
               }}
@@ -118,7 +132,6 @@ const PhotoFrame = () => {
               />
             )}
           </ImageWrapper>
-
           <h2>Elige un Marco</h2>
           <div style={{ display: "flex", gap: "10px", marginTop: "10px" }}>
             {frames.map((frame, index) => (
@@ -137,25 +150,6 @@ const PhotoFrame = () => {
               />
             ))}
           </div>
-
-          {/* Ajustes de imagen */}
-          <h2>Ajustar Foto</h2>
-          <div style={{ display: "flex", flexDirection: "column", gap: "5px" }}>
-            <label>
-              Tamaño:
-              <input type="range" min="50" max="150" value={photoSize} onChange={(e) => setPhotoSize(e.target.value)} />
-            </label>
-            <label>
-              Mover X:
-              <input type="range" min="-50" max="50" value={photoPosition.x} onChange={(e) => setPhotoPosition({ ...photoPosition, x: e.target.value })} />
-            </label>
-            <label>
-              Mover Y:
-              <input type="range" min="-50" max="50" value={photoPosition.y} onChange={(e) => setPhotoPosition({ ...photoPosition, y: e.target.value })} />
-            </label>
-          </div>
-
-          {/* Filtros */}
           <h2>Filtros</h2>
           <div style={{ display: "flex", gap: "10px" }}>
             {filters.map((filter, index) => (
@@ -164,31 +158,7 @@ const PhotoFrame = () => {
               </button>
             ))}
           </div>
-
           <DownloadButton onClick={handleDownload}>Descargar Imagen</DownloadButton>
-
-          {/* Compartir en redes sociales */}
-          <h2>Compartir</h2>
-          <div style={{ display: "flex", gap: "10px" }}>
-            <button
-              onClick={() => window.open(`https://api.whatsapp.com/send?text=Mira mi foto con marco!`, "_blank")}
-              style={{ padding: "10px", backgroundColor: "#25D366", color: "white", border: "none", borderRadius: "5px", cursor: "pointer" }}
-            >
-              WhatsApp
-            </button>
-            <button
-              onClick={() => window.open(`https://www.facebook.com/sharer/sharer.php?u=URL_DE_TU_IMAGEN`, "_blank")}
-              style={{ padding: "10px", backgroundColor: "#1877F2", color: "white", border: "none", borderRadius: "5px", cursor: "pointer" }}
-            >
-              Facebook
-            </button>
-            <button
-              onClick={() => window.open(`https://twitter.com/intent/tweet?text=Mira mi foto con marco!`, "_blank")}
-              style={{ padding: "10px", backgroundColor: "#1DA1F2", color: "white", border: "none", borderRadius: "5px", cursor: "pointer" }}
-            >
-              Twitter
-            </button>
-          </div>
         </>
       )}
     </FrameContainer>
