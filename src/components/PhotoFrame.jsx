@@ -52,6 +52,7 @@ const PhotoFrame = () => {
   const [photoSize, setPhotoSize] = useState(100);
   const canvasRef = useRef(null);
   const imageRef = useRef(null);
+  const imageWrapperRef = useRef(null);
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
@@ -66,11 +67,16 @@ const PhotoFrame = () => {
 
   const handleMouseMove = (e) => {
     if (!dragging || !imageRef.current) return;
-    setPosition({ x: e.nativeEvent.offsetX - 50, y: e.nativeEvent.offsetY - 50 });
+    setPosition((prev) => ({ x: prev.x + e.movementX, y: prev.y + e.movementY }));
   };
 
   const handleMouseUp = () => {
     setDragging(false);
+  };
+
+  const handleWheel = (e) => {
+    e.preventDefault();
+    setPhotoSize((prevSize) => Math.min(Math.max(prevSize - e.deltaY * 0.1, 50), 200));
   };
 
   const handleDownload = () => {
@@ -103,7 +109,13 @@ const PhotoFrame = () => {
       <input type="file" accept="image/*" onChange={handleImageUpload} />
       {photo && (
         <>
-          <ImageWrapper onMouseDown={handleMouseDown} onMouseMove={handleMouseMove} onMouseUp={handleMouseUp}>
+          <ImageWrapper
+            ref={imageWrapperRef}
+            onMouseDown={handleMouseDown}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+            onWheel={handleWheel}
+          >
             <StyledCanvas ref={canvasRef} />
             <img
               ref={imageRef}
