@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import PhotoFrame from './components/PhotoFrame';
 
 // Estilos mejorados para el título y el banner
 const Container = styled.div`
