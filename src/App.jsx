@@ -1,10 +1,33 @@
 import styled from "styled-components";
 import PhotoFrame from './components/PhotoFrame';
 
-// Estilos mejorados para el título y el banner
 const Container = styled.div`
-  text-align: center;
-  padding: 20px;
+  background-color: white; /* Fondo blanco */
+  color: #333; /* Color de texto oscuro para contraste */
+  min-height: 100vh; /* Asegura que ocupe toda la altura */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+const Header = styled.h1`
+  color: #007bff; /* Azul para el encabezado */
+`;
+
+const Button = styled.button`
+  background-color: #ff0000; /* Rojo para el botón */
+  color: white;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: 0.3s;
+
+  &:hover {
+    background-color: #cc0000; /* Rojo más oscuro al pasar el cursor */
+  }
 `;
 
 const Banner = styled.div`
@@ -42,7 +65,7 @@ const App = () => {
     <Container>
       {/* Banner */}
       <Banner>
-        ¡Tuto Frames!
+        <img src="../public/frames/banner.jpeg" style= responsive></img>
       </Banner>
 
       {/* Título atractivo */}
