@@ -2,7 +2,6 @@ import { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 
 const frames = ["/frames/1.png", "/frames/2.png", "/frames/3.png"];
-const filters = ["none", "grayscale(100%)", "sepia(100%)", "invert(100%)"];
 
 const FrameContainer = styled.div`
   display: flex;
@@ -10,11 +9,14 @@ const FrameContainer = styled.div`
   align-items: center;
   gap: 15px;
   padding: 20px;
+  max-width: 500px;
+  margin: auto;
 `;
 
 const ImageWrapper = styled.div`
   position: relative;
-  width: 300px;
+  width: 100%;
+  max-width: 300px;
   height: 300px;
   display: flex;
   justify-content: center;
@@ -22,7 +24,8 @@ const ImageWrapper = styled.div`
   overflow: hidden;
   cursor: grab;
   border-radius: 20px;
-  background: #f3f3f3;
+  background: linear-gradient(135deg, #f3f3f3, #e0e0e0);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 `;
 
 const StyledCanvas = styled.canvas`
@@ -30,23 +33,22 @@ const StyledCanvas = styled.canvas`
 `;
 
 const DownloadButton = styled.button`
-  padding: 10px 15px;
-  background-color: #ff5733;
+  padding: 12px 18px;
+  background-color: #007bff;
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
   font-size: 16px;
   transition: 0.3s;
   &:hover {
-    background-color: #e64a2e;
+    background-color: #0056b3;
   }
 `;
 
 const PhotoFrame = () => {
   const [photo, setPhoto] = useState(null);
   const [selectedFrame, setSelectedFrame] = useState(null);
-  const [selectedFilter, setSelectedFilter] = useState("none");
   const [dragging, setDragging] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [photoSize, setPhotoSize] = useState(100);
@@ -61,7 +63,7 @@ const PhotoFrame = () => {
     }
   };
 
-  const handleMouseDown = (e) => {
+  const handleMouseDown = () => {
     setDragging(true);
   };
 
@@ -91,9 +93,7 @@ const PhotoFrame = () => {
       frameImg.onload = () => {
         canvas.width = 300;
         canvas.height = 300;
-        ctx.filter = selectedFilter;
         ctx.drawImage(img, position.x, position.y, (photoSize / 100) * 300, (photoSize / 100) * 300);
-        ctx.filter = "none";
         ctx.drawImage(frameImg, 0, 0, 300, 300);
         const link = document.createElement("a");
         link.download = "foto_con_marco.png";
@@ -126,7 +126,6 @@ const PhotoFrame = () => {
                 position: "absolute",
                 top: `${position.y}px`,
                 left: `${position.x}px`,
-                filter: selectedFilter,
                 borderRadius: "50%",
               }}
             />
@@ -160,14 +159,6 @@ const PhotoFrame = () => {
                   border: selectedFrame === frame ? "3px solid red" : "3px solid transparent",
                 }}
               />
-            ))}
-          </div>
-          <h2>Filtros</h2>
-          <div style={{ display: "flex", gap: "10px" }}>
-            {filters.map((filter, index) => (
-              <button key={index} onClick={() => setSelectedFilter(filter)} style={{ padding: "5px", cursor: "pointer" }}>
-                {filter}
-              </button>
             ))}
           </div>
           <DownloadButton onClick={handleDownload}>Descargar Imagen</DownloadButton>
