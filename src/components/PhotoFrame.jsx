@@ -12,6 +12,29 @@ const FrameContainer = styled.div`
   max-width: 500px;
   margin: auto;
 `;
+const StyledButton = styled.button`
+  background-color: #007bff; /* Azul */
+  color: white;
+  padding: 12px 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: 0.3s;
+
+  &:hover {
+    background-color: #0056b3; /* Azul más oscuro */
+  }
+`;
+
+const StyledLink = styled.a`
+  color: #ff0000; /* Rojo para los enlaces */
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`;
 
 const ImageWrapper = styled.div`
   position: relative;
