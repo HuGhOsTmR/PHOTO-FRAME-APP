@@ -65,7 +65,7 @@ const App = () => {
     <Container>
       {/* Banner */}
       <Banner>
-        <img src="../public/frames/banner.jpeg" style= responsive></img>
+        <img src="../public/banner.jpeg" style= responsive></img>
       </Banner>
 
       {/* Título atractivo */}
