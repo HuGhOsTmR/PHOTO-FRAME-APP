@@ -45,7 +45,7 @@ const App = () => {
       </Banner>
 
       {/* Título atractivo */}
-      <Title>Aplicación de Marcos para Fotos</Title>
+      <Title>Tuto Frames</Title>
 
       {/* Componente de foto con marco */}
       <PhotoFrameContainer>
