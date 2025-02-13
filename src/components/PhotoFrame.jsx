@@ -41,7 +41,7 @@ const ImageWrapper = styled.div`
   position: relative;
   width: 300%;
   max-width: 300px;
-  height: 300px;
+  height: auto;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -102,9 +102,18 @@ const PhotoFrame = () => {
   };
 
   const handleWheel = (e) => {
-    e.preventDefault();
-    setPhotoSize((prevSize) => Math.min(Math.max(prevSize - e.deltaY * 0.1, 50), 200));
-  };
+  e.preventDefault();
+
+  setPhotoSize((prevSize) => {
+    let newSize = prevSize - e.deltaY * 0.05; // Ajusta la sensibilidad del zoom
+
+    // Mantener el tamaño dentro de un rango válido
+    newSize = Math.max(50, Math.min(newSize, 150)); // Mínimo 50%, Máximo 150%
+
+    return newSize;
+  });
+};
+
 
 const handleDownload = () => {
   if (!photo || !selectedFrame) return;
