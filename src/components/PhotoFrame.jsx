@@ -122,7 +122,7 @@ const handleDownload = () => {
   const ctx = canvas.getContext("2d");
 
   // Asegurar que las dimensiones coincidan con el marco
-  const canvasSize = 300; // Mismo tamaño del ImageWrapper
+  const canvasSize = 200; // Mismo tamaño del ImageWrapper
   canvas.width = canvasSize;
   canvas.height = canvasSize;
 
@@ -186,7 +186,8 @@ const handleDownload = () => {
               src={photo}
               alt="Foto"
               style={{
-                width: `${photoSize}%`,
+                width: "100%", // Ajusta la imagen al contenedor
+                height: "100%", // Asegura que cubra todo el espacio               
                 position: "absolute",
                 top: `${position.y}px`,
                 left: `${position.x}px`,
