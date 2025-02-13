@@ -11,6 +11,9 @@ const FrameContainer = styled.div`
   padding: 20px;
   max-width: 500px;
   margin: auto;
+  width: 300%;
+  max-width: 300px;
+  height: 300px;
 `;
 const StyledButton = styled.button`
   background-color: #007bff; /* Azul */
