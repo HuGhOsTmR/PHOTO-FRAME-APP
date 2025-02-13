@@ -159,7 +159,7 @@ const handleDownload = () => {
 
       // Descargar la imagen
       const link = document.createElement("a");
-      link.download = "foto_con_marco.png";
+      link.download = "Tuto_Frame.png";
       link.href = canvas.toDataURL("image/png");
       link.click();
     };
