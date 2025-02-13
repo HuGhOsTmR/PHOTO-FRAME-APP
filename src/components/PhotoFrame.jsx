@@ -39,8 +39,8 @@ const StyledLink = styled.a`
 
 const ImageWrapper = styled.div`
   position: relative;
-  width: 300px;
-  height: 300px;
+  width: 200px;
+  height: 200px;
   display: flex;
   justify-content: center;
   align-items: center;
