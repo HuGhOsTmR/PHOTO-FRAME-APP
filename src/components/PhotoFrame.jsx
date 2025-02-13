@@ -133,7 +133,7 @@ const PhotoFrame = () => {
       <input type="file" accept="image/*" onChange={handleImageUpload} />
       {photo && (
         <>
-          <ImageWrapper
+         <ImageWrapper
             ref={imageWrapperRef}
             onMouseDown={handleMouseDown}
             onMouseMove={handleMouseMove}
@@ -150,7 +150,9 @@ const PhotoFrame = () => {
                 position: "absolute",
                 top: `${position.y}px`,
                 left: `${position.x}px`,
-                borderRadius: "50%",
+                borderRadius: "50%", // Mantiene la imagen redonda
+                objectFit: "cover", // Hace que la imagen se ajuste sin distorsionarse
+                objectPosition: "center", // Asegura que la imagen esté centrada dentro del círculo
               }}
             />
             {selectedFrame && (
@@ -167,6 +169,7 @@ const PhotoFrame = () => {
               />
             )}
           </ImageWrapper>
+
           <h2>Elige un Marco</h2>
           <div style={{ display: "flex", gap: "10px", marginTop: "10px" }}>
             {frames.map((frame, index) => (
