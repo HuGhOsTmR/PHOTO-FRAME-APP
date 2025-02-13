@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 
-const frames = ["/frames/4.png", "/frames/2.png", "/frames/3.png"];
+const frames = ["/frames/5.png", "/frames/2.png", "/frames/3.png"];
 
 const FrameContainer = styled.div`
   display: flex;
