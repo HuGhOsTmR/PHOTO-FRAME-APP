@@ -65,7 +65,7 @@ const App = () => {
     <Container>
       {/* Banner */}
       <Banner>
-        <img src="./frames/banner.jpeg" style={{ width: '100%', height: 'auto' }} alt="Banner" />
+        <img src="./banner.jpeg" style={{ width: '50%', height: 'auto' }} alt="Banner" />
 
       </Banner>
 
