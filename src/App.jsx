@@ -31,7 +31,11 @@ const Button = styled.button`
 `;
 
 const Banner = styled.div`
-  background: linear-gradient(135deg, #ff0000, #ff8c42); /* Colores vibrantes */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  background: linear-gradient(135deg, #ff0000, #ff8c42);
   padding: 20px;
   color: white;
   font-size: 24px;
@@ -40,6 +44,7 @@ const Banner = styled.div`
   margin-bottom: 20px;
   border-radius: 8px;
 `;
+
 
 const Title = styled.h1`
   font-family: 'Arial', sans-serif;
@@ -64,10 +69,16 @@ const App = () => {
   return (
     <Container>
       {/* Banner */}
-      <Banner>
-        <img src="./banner.jpeg" style={{ display: 'block', margin: '0 auto', width: '50%', height: 'auto' }} alt="Banner" />
-      </Banner>
-
+     <Banner>
+      <img
+        src="./banner.jpeg"
+        alt="Banner"
+        style={{
+          maxWidth: "80%", // Controla el tamaño del banner
+          height: "auto",
+        }}
+      />
+    </Banner>
       {/* Título atractivo */}
       <Title>Tuto Frames</Title>
 
