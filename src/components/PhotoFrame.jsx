@@ -47,8 +47,8 @@ const ImageWrapper = styled.div`
   overflow: hidden;
   cursor: grab;
   border-radius: 50%; /* Círculo */
-  background-color: #007bff; /* Azul para el fondo */
-  border: 5px solid #ff0000; /* Borde rojo */
+  background-color: #ffffff; /* Azul para el fondo */
+  border: none;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 `;
 
