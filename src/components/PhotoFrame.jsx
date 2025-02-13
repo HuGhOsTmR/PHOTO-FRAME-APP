@@ -39,19 +39,19 @@ const StyledLink = styled.a`
 
 const ImageWrapper = styled.div`
   position: relative;
-  width: 300%;
-  max-width: 300px;
-  height: 300;
+  width: 300px;
+  height: 300px;
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
   cursor: grab;
-  border-radius: 50%; /* Círculo */
-  background-color: #ffffff; /* Azul para el fondo */
+  border-radius: 50%;
+  background-color: #ffffff;
   border: none;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 `;
+
 
 const StyledCanvas = styled.canvas`
   display: none;
