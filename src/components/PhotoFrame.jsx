@@ -41,7 +41,7 @@ const ImageWrapper = styled.div`
   position: relative;
   width: 300%;
   max-width: 300px;
-  height: auto;
+  height: 300;
   display: flex;
   justify-content: center;
   align-items: center;
