@@ -65,8 +65,7 @@ const App = () => {
     <Container>
       {/* Banner */}
       <Banner>
-        <img src="./banner.jpeg" style={{ width: '50%', height: 'auto' }} alt="Banner" />
-
+        <img src="./banner.jpeg" style={{ display: 'block', margin: '0 auto', width: '50%', height: 'auto' }} alt="Banner" />
       </Banner>
 
       {/* Título atractivo */}
