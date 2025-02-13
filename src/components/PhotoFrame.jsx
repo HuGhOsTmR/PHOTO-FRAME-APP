@@ -105,27 +105,57 @@ const PhotoFrame = () => {
     setPhotoSize((prevSize) => Math.min(Math.max(prevSize - e.deltaY * 0.1, 50), 200));
   };
 
-  const handleDownload = () => {
-    if (!photo || !selectedFrame) return;
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext("2d");
-    const img = new Image();
-    img.src = photo;
-    img.onload = () => {
-      const frameImg = new Image();
-      frameImg.src = selectedFrame;
-      frameImg.onload = () => {
-        canvas.width = 300;
-        canvas.height = 300;
-        ctx.drawImage(img, position.x, position.y, (photoSize / 100) * 300, (photoSize / 100) * 300);
-        ctx.drawImage(frameImg, 0, 0, 300, 300);
-        const link = document.createElement("a");
-        link.download = "foto_con_marco.png";
-        link.href = canvas.toDataURL("image/png");
-        link.click();
-      };
+const handleDownload = () => {
+  if (!photo || !selectedFrame) return;
+
+  const canvas = canvasRef.current;
+  const ctx = canvas.getContext("2d");
+
+  // Asegurar que las dimensiones coincidan con el marco
+  const canvasSize = 300; // Mismo tamaño del ImageWrapper
+  canvas.width = canvasSize;
+  canvas.height = canvasSize;
+
+  const img = new Image();
+  img.src = photo;
+  img.crossOrigin = "anonymous"; // Evita problemas de CORS si usas imágenes externas
+  
+  img.onload = () => {
+    const frameImg = new Image();
+    frameImg.src = selectedFrame;
+    frameImg.crossOrigin = "anonymous";
+
+    frameImg.onload = () => {
+      ctx.clearRect(0, 0, canvasSize, canvasSize);
+
+      // Crear un recorte circular para la imagen
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(canvasSize / 2, canvasSize / 2, canvasSize / 2, 0, Math.PI * 2);
+      ctx.closePath();
+      ctx.clip();
+
+      // Dibujar la imagen de la foto centrada
+      const imgSize = (photoSize / 100) * canvasSize;
+      const imgX = (canvasSize - imgSize) / 2 + position.x;
+      const imgY = (canvasSize - imgSize) / 2 + position.y;
+      ctx.drawImage(img, imgX, imgY, imgSize, imgSize);
+
+      // Restaurar el área de dibujo para agregar el marco
+      ctx.restore();
+
+      // Dibujar el marco sobre la imagen
+      ctx.drawImage(frameImg, 0, 0, canvasSize, canvasSize);
+
+      // Descargar la imagen
+      const link = document.createElement("a");
+      link.download = "foto_con_marco.png";
+      link.href = canvas.toDataURL("image/png");
+      link.click();
     };
   };
+};
+
 
   return (
     <FrameContainer>
