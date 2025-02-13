@@ -31,7 +31,7 @@ const Button = styled.button`
 `;
 
 const Banner = styled.div`
-  background: linear-gradient(135deg, #ff6f61, #ff8c42); /* Colores vibrantes */
+  background: linear-gradient(135deg, #ff0000, #ff8c42); /* Colores vibrantes */
   padding: 20px;
   color: white;
   font-size: 24px;
