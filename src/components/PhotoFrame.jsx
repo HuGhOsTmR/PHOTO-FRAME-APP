@@ -38,7 +38,7 @@ const StyledLink = styled.a`
 
 const ImageWrapper = styled.div`
   position: relative;
-  width: 100%;
+  width: 300%;
   max-width: 300px;
   height: 300px;
   display: flex;
