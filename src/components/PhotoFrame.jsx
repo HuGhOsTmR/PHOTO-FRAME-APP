@@ -39,8 +39,8 @@ const StyledLink = styled.a`
 
 const ImageWrapper = styled.div`
   position: relative;
-  width: 800px;
-  height: 800px;
+  width: 2048px;
+  height: 2048px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -122,7 +122,7 @@ const handleDownload = () => {
   const ctx = canvas.getContext("2d");
 
   // Asegurar que las dimensiones coincidan con el marco
-  const canvasSize = 800; // Mismo tamaño del ImageWrapper
+  const canvasSize = 2048; // Mismo tamaño del ImageWrapper
   canvas.width = canvasSize;
   canvas.height = canvasSize;
 
